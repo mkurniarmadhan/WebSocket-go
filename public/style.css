@@ -1,0 +1,7 @@
+/* Your CSS styles here */
+#chat-container {
+  height: 300px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 10px;
+}

@@ -1,0 +1,65 @@
+# WebSocket Chat Server  Go
+
+Proyek ini adalah server chat sederhana berbasis WebSocket menggunakan Go dan `gorilla/websocket`. Klien dapat terhubung, mengirim pesan, dan pesan tersebut akan dibagikan ke semua klien di ruangan yang sama.
+
+## Fitur
+- Mendukung banyak klien WebSocket.
+- Menangani koneksi dan pemutusan klien.
+- Menyiarkan pesan ke semua klien dalam satu ruangan.
+- Menyediakan server file statis untuk front-end.
+
+## Cara Menjalankan
+
+### Prasyarat
+- Go sudah terinstal.
+- Instal paket `gorilla/websocket` dengan perintah:
+  ```bash
+  go get github.com/gorilla/websocket
+  ```
+
+### Langkah Menjalankan
+
+1. Simpan kode ini dan buat folder `public` untuk file front-end (HTML, JS, dll.).
+2. Jalankan server:
+   ```bash
+   go run main.go
+   ```
+3. Buka `http://localhost:8081/` di browser.
+
+### Contoh Frontend
+
+Tambahkan file `index.html` di folder `public`:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat WebSocket</title>
+</head>
+<body>
+    <h1>WebSocket Chat</h1>
+    <textarea id="messages" readonly></textarea><br>
+    <input type="text" id="messageBox" placeholder="Ketik pesan">
+    <button id="sendButton">Kirim</button>
+
+    <script>
+        const socket = new WebSocket("ws://localhost:8081/ws");
+        const messages = document.getElementById('messages');
+        const messageBox = document.getElementById('messageBox');
+        const sendButton = document.getElementById('sendButton');
+
+        socket.onmessage = function(event) {
+            messages.value += event.data + "\n";
+        };
+
+        sendButton.onclick = function() {
+            socket.send(messageBox.value);
+            messageBox.value = '';
+        };
+    </script>
+</body>
+</html>
+```
+
+---
